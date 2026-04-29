@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Install Theme – Floppy Bird Disc</title>
+  <style>
+    body { font-family: -apple-system, sans-serif; max-width: 420px; margin: 60px auto; padding: 0 24px; text-align: center; color: #1c1c1e; }
+    h1   { font-size: 1.4rem; margin-bottom: 8px; }
+    p    { color: #636366; font-size: 0.95rem; line-height: 1.5; }
+    a.btn {
+      display: inline-block; margin-top: 28px; padding: 14px 32px;
+      background: #007aff; color: #fff; border-radius: 12px;
+      font-size: 1.05rem; font-weight: 600; text-decoration: none;
+    }
+    .note { margin-top: 24px; font-size: 0.82rem; color: #8e8e93; }
+  </style>
+</head>
+<body>
+  <h1 id="theme-name">Opening Floppy…</h1>
+  <p id="status">Tap the button if the app doesn't open automatically.</p>
+  <a class="btn" id="deep-btn" href="#">Open in Floppy</a>
+  <p class="note" id="fallback-note" style="display:none">
+    Don't have the app? <a href="https://apps.apple.com/app/id6762493898">Download Floppy Bird Disc free</a> from the App Store,
+    then <a id="deep-retry" href="#">tap here to install the theme</a>.
+  </p>
+
+  <script>
+    const params  = new URLSearchParams(location.search);
+    const theme   = params.get('theme') || 'classic';
+    const rawURL  = 'https://raw.githubusercontent.com/milika/FloppyDiscBirdPublic/main/' + theme + '.fdbtheme';
+    const deepURL = 'com.floppybirddisc.app://install?url=' + encodeURIComponent(rawURL);
+
+    document.getElementById('theme-name').textContent = 'Installing "' + theme + '" theme';
+    document.getElementById('deep-btn').href = deepURL;
+    document.getElementById('deep-retry').href = deepURL;
+
+    // Show fallback download link after a delay (app probably not installed)
+    setTimeout(function () {
+      document.getElementById('fallback-note').style.display = '';
+    }, 2500);
+
+    // Auto-fire deep link on load
+    location.href = deepURL;
+  </script>
+</body>
+</html>
